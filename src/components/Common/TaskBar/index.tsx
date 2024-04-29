@@ -14,6 +14,7 @@ import diary from 'assets/icons/diary.png';
 import sound from 'assets/icons/sound.png';
 import mp3 from 'assets/icons/mp3.png';
 import computer from 'assets/icons/computer.png';
+import pointer from 'assets/icons/pointer.svg';
 
 const Layout = styled.div`
   position: absolute;
@@ -34,8 +35,10 @@ const Layout = styled.div`
     height: 100%;
     width: 100%;
 
-    .app-block-contianer {
+    .center {
       display: flex;
+      height: 100%;
+      width: 3694px;
     }
   }
 
@@ -50,6 +53,7 @@ const Layout = styled.div`
 
 const AppBlock = styled.div<{ isActive: boolean }>`
   display: flex;
+  align-items: center;
   width: 950px;
   padding: 0 26px;
   margin-right: 20px;
@@ -57,7 +61,7 @@ const AppBlock = styled.div<{ isActive: boolean }>`
   background: silver;
   box-shadow: inset -6px -6px #0a0a0a, inset 6px 6px #fff, inset -7px -7px grey,
     inset 7px 7px #dfdfdf;
-  cursor: pointer;
+  cursor: url(${pointer}), pointer;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -75,6 +79,12 @@ const AppBlock = styled.div<{ isActive: boolean }>`
     height: 100%;
   }
 
+  .title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
   img {
     height: 79px;
     margin-right: 31px;
@@ -82,8 +92,7 @@ const AppBlock = styled.div<{ isActive: boolean }>`
 `;
 
 function TaskBar() {
-  const [app, setApp] = useRecoilState(appState);
-  const { id: activateId, apps } = app;
+  const [{ id: activateId, apps }, setApp] = useRecoilState(appState);
 
   return (
     <Layout>
@@ -98,7 +107,7 @@ function TaskBar() {
           <Divider />
           <Divider reverse />
         </DecoLayout>
-        <div className='app-block-contianer'>
+        <div className='center'>
           {apps.length > 0 &&
             apps.map(({ id, name, src }) => (
               <AppBlock
@@ -110,7 +119,7 @@ function TaskBar() {
                 <span>
                   <img src={src} />
                 </span>
-                <span>{name}</span>
+                <div className='title'>{name}</div>
               </AppBlock>
             ))}
         </div>

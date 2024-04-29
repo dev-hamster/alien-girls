@@ -23,15 +23,12 @@ const Left = styled.div`
 `;
 
 const Center = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 786px;
+  padding-right: 337px;
   box-sizing: border-box;
 
   .folders {

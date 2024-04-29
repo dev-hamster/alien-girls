@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { QuizButton, Layout, Exploring } from './Quiz.styled';
 import styled from 'styled-components';
 import QuizLayout from './QuizLayout';
 import { BoxShadowOuter } from 'styles/BoxShadow.styled';
 import quizAni from 'assets/images/quiz/quiz.gif';
 import alien from 'assets/images/quiz/alien.png';
+import answer from 'assets/images/quiz/answer.gif';
+import wrong from 'assets/images/quiz/earth-jelly.gif';
 
 enum Step {
   One = 1,
@@ -33,7 +35,6 @@ const Window = styled.div`
   ${BoxShadowOuter}
   padding: 22px;
   font-size: 48px;
-  cursor: pointer;
 
   .window-body {
     height: fit-content;
@@ -72,7 +73,6 @@ const Window = styled.div`
 
 const StepTwoLayout = styled(Layout)`
   flex-direction: column;
-  margin-top: 240px; // TODO 개선필요
 
   .answer {
     display: flex;
@@ -98,17 +98,22 @@ const StepTwoLayout = styled(Layout)`
 
 const WrongLayout = styled(Layout)`
   button.retry {
-    padding: 0 60px;
-    height: 200px;
-    margin-left: 20px;
-    font-size: 78px;
+    margin-top: 155px;
+    width: 366px;
+    height: 152px;
+    font-size: 52px;
+    font-weight: 400;
   }
 `;
 
 function Correct() {
   return (
     <Layout>
-      <h1>정답입니다.</h1>
+      <img src={answer} width={'1260px'} height={'1080px'} />
+      <Typo>
+        정답입니다!! 외계인이 축하의 의미로 당신에게 작은 선물을 주고 갔습니다.
+        <Deco src={alien} />
+      </Typo>
     </Layout>
   );
 }
@@ -116,25 +121,29 @@ function Correct() {
 function Wrong({ handleRetry }: any) {
   return (
     <WrongLayout>
-      <h1>틀렸습니다.</h1>
+      <img src={wrong} width={'1260px'} height={'1080px'} />
+      <Typo>
+        이런.. 틀렸습니다. 당신의 실수로 지구는 지구젤리가 되어버렸습니다.
+        <Deco src={alien} />
+      </Typo>
       <button className='retry' onClick={handleRetry}>
-        다시 도전하기
+        재도전
       </button>
     </WrongLayout>
   );
 }
 
 function Question({ onClose }: { onClose: any }) {
-  const [step, setStep] = useState(Step.One);
+  const [step, setStep] = useState(Step.Two);
   const [answer, setAnswer] = useState<number>();
   const [isAnswer, setIsAnswer] = useState<boolean>();
   const [isSubmit, setIsSubmit] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setStep(Step.Two); // TODO 개선필요
-    }, 4000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setStep(Step.Two); // TODO 개선필요
+  //   }, 4000);
+  // }, []);
 
   const handleRetry = () => {
     setStep(Step.Two);
@@ -169,7 +178,7 @@ function Question({ onClose }: { onClose: any }) {
                 </div>
               </Window>
               <Typo>
-                당신의 찾은 외계인은 모두 몇 명인가요? <Deco src={alien} />
+                당신이 찾은 외계인은 모두 몇 명인가요? <Deco src={alien} />
                 <Deco src={alien} />
               </Typo>
               <div className='answer'>
@@ -181,14 +190,12 @@ function Question({ onClose }: { onClose: any }) {
                 />
                 <button
                   onClick={() => {
-                    /** TODO 
                     if (answer === ANSWER) {
                       setIsAnswer(true);
                     } else {
                       setIsAnswer(false);
                     }
                     setIsSubmit(true);
-                    */
                   }}
                 >
                   입력

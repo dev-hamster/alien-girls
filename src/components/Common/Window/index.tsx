@@ -1,9 +1,14 @@
-import styled from 'styled-components';
-import Draggable from 'react-draggable';
-import { BoxShadowOuter } from 'styles/BoxShadow.styled';
+import pointer from 'assets/icons/pointer.svg';
+import Draggable from 'components/Common/Draggable';
 import Icon from 'components/Common/Icon';
+import { useRecoilState } from 'recoil';
+import { appState } from 'store';
+import styled from 'styled-components';
+import { BoxShadowOuter } from 'styles/BoxShadow.styled';
+import { AppEnum } from 'types/app';
 
 interface Props {
+  id: AppEnum;
   open?: boolean;
   src?: string;
   title?: string;
@@ -15,16 +20,16 @@ interface Props {
   onClose?: any;
 }
 
-const Layout = styled.div`
+const Layout = styled.div<{ isActive: boolean }>`
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 10;
+  z-index: ${({ isActive }) => (isActive ? 11 : 10)};
   box-sizing: border-box;
   ${BoxShadowOuter}
   padding: 22px;
   font-size: 48px;
-  cursor: pointer;
+  cursor: url(${pointer}), pointer;
 
   .window-body {
     height: fit-content;
@@ -62,6 +67,7 @@ const Layout = styled.div`
 `;
 
 function Window({
+  id,
   open,
   src,
   title,
@@ -71,11 +77,15 @@ function Window({
   defaultY,
   onClose,
 }: Props) {
+  const [{ id: activateId }, setApp] = useRecoilState(appState);
   if (!open) return <></>;
 
   return (
-    <Draggable defaultPosition={{ x: defaultX || 0, y: defaultY || 0 }}>
-      <Layout style={style} className='window'>
+    <Draggable
+      onDrag={() => setApp((prev) => ({ ...prev, id }))}
+      defaultPosition={{ x: defaultX || 0, y: defaultY || 0 }}
+    >
+      <Layout isActive={activateId === id} style={style} className='window'>
         <div className='title-bar'>
           <div className='title-bar-text'>
             {src && <Icon src={src} size={60} />}

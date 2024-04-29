@@ -5,6 +5,7 @@ enum AppEnum {
   MyMusic,
   MyEarth,
   Sound,
+  Doc,
   A1,
   L2,
   I3,

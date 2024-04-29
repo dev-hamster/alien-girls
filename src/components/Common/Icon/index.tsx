@@ -28,6 +28,7 @@ const Face = styled.img<{ src: string }>`
 const Typo = styled.div`
   margin-top: 15px;
   font-size: 33px;
+  width: 200px;
   color: white;
   text-align: center;
 `;

@@ -1,5 +1,5 @@
-import { AppT } from 'types/app';
 import { atom } from 'recoil';
+import { AppT } from 'types/app';
 
 interface appStateT extends AppT {
   apps: AppT[];

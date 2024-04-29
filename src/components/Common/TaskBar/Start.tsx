@@ -15,7 +15,6 @@ const Button = styled.div`
   width: 100%;
   box-sizing: border-box;
   ${BoxShadowOuter}
-  cursor: pointer;
 
   img {
     width: 30%;

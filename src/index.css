@@ -2,8 +2,6 @@
 
 * {
   font-family: 'Galmuri11';
-  cursor: url('/src/assets/icons/cursor.svg')
-    url('/src/assets/icons/pointer.svg') auto;
 }
 
 body {
@@ -13,6 +11,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: url('/src/assets/icons/cursor.svg'), auto;
+}
+
+button {
+  cursor: url('/src/assets/icons/cursor.svg'), auto;
 }
 
 /* TODO font-size */

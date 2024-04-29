@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import pointer from 'assets/icons/pointer.svg';
 
 interface Props {
   close?: boolean;
@@ -28,10 +29,10 @@ const QuizLayout = styled.div`
     .back {
       position: relative;
       left: 0;
-      cursor: pointer;
+      cursor: url(${pointer}), pointer;
     }
     .close {
-      cursor: pointer;
+      cursor: url(${pointer}), pointer;
     }
   }
 `;

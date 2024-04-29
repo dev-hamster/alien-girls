@@ -7,12 +7,20 @@ import Icon from 'components/Common/Icon';
 import Window from 'components/Common/Window';
 
 interface Props extends AppT {
-  desktop?: boolean;
   style?: any;
   zIndex?: number;
   defaultX?: number;
   defaultY?: number;
-  children: React.ReactElement;
+  children?: React.ReactElement;
+  Render?: (
+    appInfo: AppT & {
+      open?: boolean;
+      set: any;
+      zIndex?: number;
+      defaultX?: number;
+      defaultY?: number;
+    }
+  ) => React.ReactElement;
 }
 
 const Layout = styled.div`
@@ -24,11 +32,11 @@ function Application({
   id,
   name,
   src,
-  desktop = true,
   style,
   defaultX,
   defaultY,
   zIndex,
+  Render,
   children,
 }: Props) {
   const setAppState = useSetRecoilState(appState);
@@ -57,10 +65,12 @@ function Application({
   return (
     <Layout onDoubleClick={() => handleDoubleClick({ id, src, name })}>
       <>
-        {desktop && <Icon text={name} src={src} size={130} />}
-        {!desktop && <Icon src={src} size={82} />}
-        {open && (
+        <Icon text={name} src={src} size={130} />
+        {Render &&
+          Render({ open, set, id, name, src, defaultX, defaultY, zIndex })}
+        {!Render && open && (
           <Window
+            id={id}
             title={name}
             src={src}
             open={open}
@@ -69,7 +79,7 @@ function Application({
             defaultY={defaultY}
             onClose={() => handleClose({ id, src, name })}
           >
-            <>{children}</>
+            <>{children && <>{children}</>}</>
           </Window>
         )}
       </>
